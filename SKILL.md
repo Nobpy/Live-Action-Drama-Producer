@@ -1,14 +1,14 @@
 ---
 name: live-action-drama-producer
-description: "Orchestrate a live-action AI short-drama run from a local script and asset folder: match or generate assets, preserve tightly split-shot continuity with actual tail frames, 1–2 second edit-handle buffers and blocking composites, audit V4 asset bindings, upload and @-reference exact assets in 剧梦, generate and QC videos, synthesize/timestamp/mix narration, and recommend/download BGM without mixing it. Use for 全流程生成、剧梦生视频、连续分镜防穿帮、尾帧续接、剪辑缓冲、站位合成图、缺失资产补全、资产引用自检、短剧旁白回填或短剧配乐任务."
+description: "Orchestrate a live-action AI short-drama run from a local script and asset folder: split 30-second V4 shots into balanced 70–90-word source ranges, use narration only as silent visual anchors, match or generate assets, preserve continuity with actual tail frames and blocking composites, audit exact 剧梦 asset bindings, generate and QC videos, synthesize/timestamp/mix narration later, and recommend/download BGM without mixing it. Use for 全流程生成、剧梦生视频、V4均衡拆镜、旁白无声画面锚点、连续分镜防穿帮、尾帧续接、剪辑缓冲、站位合成图、缺失资产补全、资产引用自检、短剧旁白回填或短剧配乐任务."
 metadata:
-  version: 1.5.1
+  version: 1.6.0
   language: zh-CN
 ---
 
-# Live-Action-Drama-Producer v1.5.1
+# Live-Action-Drama-Producer v1.6.0
 
-把用户提供的剧本和资产目录转化为可交付的原始分镜视频、纯旁白音频、旁白版分镜视频与独立 BGM 候选。通过浏览器控制实际平台；缺失的必要视觉资产先按剧本和项目风格补全并验收；V4 先完成拆镜与导演设计，再对紧接镜头使用真实尾帧、对复杂空间调度使用站位合成图，必要时两者并用；V4 提示词必须通过资产引用与连续性闭环自检后才能生成视频。
+把用户提供的剧本和资产目录转化为可交付的原始分镜视频、纯旁白音频、旁白版分镜视频与独立 BGM 候选。通过浏览器控制实际平台；V4 对英文等空格分词剧本按每个完整 30 秒 70～90 个原文单词均衡拆镜，最后一镜不足 30 秒时按实际容量设计；旁白可固定画面但绝不进入原视频音轨；缺失的必要视觉资产先按剧本和项目风格补全并验收；紧接镜头使用真实尾帧、复杂空间调度使用站位合成图，必要时两者并用；提示词必须通过拆镜、资产引用与连续性闭环自检后才能生成视频。
 
 ## 范围与硬边界
 
@@ -41,11 +41,11 @@ metadata:
 
 V4 提示词完成后，必须运行 [scripts/prompt_voiceover_guard.py](scripts/prompt_voiceover_guard.py) 生成平台版提示词，再将平台版填入剧梦。不得修改原始 V4 参考文件。适配器必须：
 
-1. 保留旁白原文、时长、画面与表演占位；
-2. 把旁白标题转换为“旁白占位（不生成声音，不朗读，不对口型）”；
+1. 保留旁白原文、时长，以及对画面与表演的锚定作用；
+2. 把旁白标题转换为“旁白画面锚点（仅控制画面，不生成声音，不朗读，不对口型）”；
 3. 加入音频白名单：只允许现场对白、环境声、动作音效；
-4. 加入黑名单：旁白、内心独白、画外解说、字幕、BGM 均不得生成；
-5. 对“男/女声画外音、旁白朗读、voice-over narration、spoken narration”等危险指令报错。
+4. 加入黑名单：旁白、内心独白、画外解说、TTS、低语式旁白、字幕、BGM 均不得生成；
+5. 对“男/女声画外音、旁白朗读、voice-over narration、spoken narration、narrator voice、TTS narration”等危险指令报错。
 
 提示词不得超过 15000 字。原文对白保留原语言、说话人和含义并要求对口型。信息无法在 30 秒内自然完成时继续拆镜，不得加速对白。每镜锁定起止句及下一镜禁止提前出现的剧情。
 
@@ -70,11 +70,17 @@ V4 提示词完成后，必须运行 [scripts/prompt_voiceover_guard.py](scripts
 
 ### 1. 读取、分类与拆镜
 
-完整读取指定范围，区分现场对白、旁白/心理叙述、动作和场景说明。输出内部边界表：集数、分镜号、原文起止、预计时长、现场对白、旁白、所需资产、下一镜禁入剧情。
+完整读取指定范围，区分现场对白、旁白/心理叙述、动作和场景说明。输出内部边界表：集数、分镜号、原文起止、`coverage_words`、预计时长、与完整镜平均词数的偏差、现场对白、旁白、所需资产、下一镜禁入剧情。
+
+对英文及其他以空格分词的剧本，每个完整 30 秒分镜必须连续覆盖 70～90 个原剧本单词。只统计实际承接的原始对白、原始旁白/心理叙述和有意义动作/叙事文字；不统计集数、场次标题、人物标签、时间码、资产名、技术说明和新增导演文字。标点不计词，带撇号词和原文中的连字符复合词各按一个词。非空格分词语言使用项目已确认的分词器或用户指定等价口径，不能临时换口径凑数。
+
+较长剧集除最后一镜外全部使用 30 秒，并把各完整镜尽量均衡到约 80 词；所有完整 30 秒镜必须在 70～90 词内，正常情况下最大词数差不得超过 10。最后一镜若自然支撑 30 秒，同样必须为 70～90 词；若按正常对白、动作和停顿确实达不到 30 秒，则按实际容量设计 4～29 秒，不填充、不重复、不拖慢，且不得超过 90 词。若最后一镜不足 4 秒，回调前镜边界重新拆分。所有镜必须从原文第一词到最后一词连续覆盖，无遗漏、重叠、倒序或改写。
+
+把各镜实际原文填入 [scripts/storyboard_word_budget.py](scripts/storyboard_word_budget.py) 的 JSON 输入并运行校验。只有词数、时长、均衡度和分镜次序全部通过后才记录 `SCRIPT_SPLIT_PREFLIGHT_PASS`；失败时重新划分。无法形成合法边界时标记 `SCRIPT_SPLIT_CONSTRAINT_BLOCKED` 并停止生成受影响提示词，绝不能静默超出范围。
 
 先按 V4 的剧情边界和导演逻辑完成拆镜，再标记 `continuity_link`：同一场景、同一时间、同一段未演完的动作、对白或故事被时长迫使拆开的相邻分镜标为 `HARD`；同一地点但已切到下一段行动或存在明显时间跳转标为 `SOFT`；切到下一天、其他场景、其他时空或无直接连续关系标为 `NONE`。同一个场景本身不自动等于 `HARD`。`HARD` 分镜组成连续性簇，必须顺序生成，不能在上一镜真实视频和连续性移交尚未完成时先生成下一镜。完整规则见 [references/cross-shot-continuity.md](references/cross-shot-continuity.md)。
 
-拆镜时必须先做音频容量预检：`预计对白秒数 + 预计旁白秒数（语速不高于 1.25）+ 每个对白/旁白交界至少 0.35 秒保护量 + FRAME/BOTH 镜头的 1–2 秒尾帧识别缓冲 <= 该镜时长`。不使用尾帧时缓冲项为零。不满足时在生成提示词前继续拆镜；不得假设生成后可以靠压低对白、强行叠音、占用剪辑缓冲或超过安全语速解决。平台提示词必须为每段旁白安排语义对应的“无人物对白、无人开口、无人对口型”的画面占位窗口。
+拆镜时必须先做音频容量预检：`预计对白秒数 + 预计旁白画面锚点所需时间（按后续安全语速不高于 1.25 估算）+ 每个对白/旁白交界至少 0.35 秒保护量 + FRAME/BOTH 镜头的 1–2 秒尾帧识别缓冲 <= 该镜时长`。不使用尾帧时缓冲项为零。不满足时在生成提示词前继续拆镜；不得假设生成后可以靠压低对白、强行叠音、占用剪辑缓冲或超过安全语速解决。FRAME/BOTH 的完整 30 秒镜仍须覆盖 70～90 词，但这些内容必须能在扣除缓冲后的 28～29 秒内自然完成。平台提示词必须为每段旁白安排语义对应的“无人物对白、无人开口、无人对口型”的画面窗口；旁白原文只固定画面，不触发任何声音。
 
 ### 2. 生成并校验资产绑定
 
@@ -82,7 +88,7 @@ V4 提示词完成后，必须运行 [scripts/prompt_voiceover_guard.py](scripts
 
 ### 3. 生成平台提示词
 
-按 V4 写完整提示词，再用防误读适配器生成平台版。检查剧情不漏、不重、不提前；位置、轴线、服装、道具连续；对白与旁白分类正确；所有实际可见资产均进入绑定表；没有多余资产。
+仅在 `SCRIPT_SPLIT_PREFLIGHT_PASS` 后按 V4 写完整提示词，再用防误读适配器生成平台版。检查剧情不漏、不重、不提前；位置、轴线、服装、道具连续；对白与旁白分类正确；旁白只作为无声画面锚点；所有实际可见资产均进入绑定表；没有多余资产。
 
 平台版填入剧梦并完成 `@` 绑定后，必须完整阅读并执行 [references/v4-asset-reference-preflight.md](references/v4-asset-reference-preflight.md)。资产引用数量没有上限；不得为减少 token 数量而省略必要资产。普通文字资产名、普通文字 `@名称` 或素材栏图片都不算绑定，只有从候选列表选中形成的平台 token 才算引用。
 
@@ -105,7 +111,7 @@ V4 先完成剧情拆镜和下一镜导演设计，再完整阅读并执行 [ref
 
 ### 5. 剧梦生成原视频
 
-按 [references/platforms.md](references/platforms.md) 操作。没有可验证的 `ASSET_PREFLIGHT_PASS` 时绝对不能点击生成。通过后再次核对模型、比例、画质、时长及页面 token 集合，只点击一次生成，完成后播放验证并按固定规则下载。使用 `FRAME` 或 `BOTH` 时，总时长必须额外容纳 1–2 秒尾帧识别缓冲；不能通过挤压对白、旁白占位或后续剧情来腾出该段。
+按 [references/platforms.md](references/platforms.md) 操作。没有可验证的 `SCRIPT_SPLIT_PREFLIGHT_PASS` 和 `ASSET_PREFLIGHT_PASS` 时绝对不能点击生成。通过后再次核对模型、比例、画质、时长及页面 token 集合，只点击一次生成，完成后播放验证并按固定规则下载。使用 `FRAME` 或 `BOTH` 时，总时长必须额外容纳 1–2 秒尾帧识别缓冲；不能通过挤压对白、旁白画面锚点或后续剧情来腾出该段。
 
 `HARD` 连续性簇按“当前镜生成与 QC → 提取可用尾帧 → 准备下一镜 → 下一镜自检与生成”循环执行，禁止整簇同时排队抽卡。
 
@@ -147,6 +153,6 @@ Voice Clone 参数按平台参考执行。生成后试听并测量实际 WAV；�
 
 ## 完成标准
 
-交付记录列出：分镜边界、连续性簇和状态；每个 `HARD` 连接的尾帧时间码、文件、连续性移交、1–2 秒尾帧识别缓冲范围、缓冲后 CUT 点和可选站位合成图；注册表与每镜资产键；资产引用自检结果；补生成资产的需求说明、最终文件、QC、平台 ID 与 token；原视频与 `(OV)` 绝对路径；旁白文本、速度、参考音频、WAV 与 cue；QC 结果及异常时间码；BGM 候选、平台 ID、理由与独立文件路径；未完成项。只有已授权阶段都有可验证文件，或真实阻塞已明确报告时才结束。
+交付记录列出：分镜边界、每镜 `coverage_words`、时长、均衡度与 `SCRIPT_SPLIT_PREFLIGHT` 状态；连续性簇和状态；每个 `HARD` 连接的尾帧时间码、文件、连续性移交、1–2 秒尾帧识别缓冲范围、缓冲后 CUT 点和可选站位合成图；注册表与每镜资产键；资产引用自检结果；补生成资产的需求说明、最终文件、QC、平台 ID 与 token；原视频与 `(OV)` 绝对路径；旁白文本、速度、参考音频、WAV 与 cue；QC 结果及异常时间码；BGM 候选、平台 ID、理由与独立文件路径；未完成项。只有已授权阶段都有可验证文件，或真实阻塞已明确报告时才结束。
 
 用户询问安装、准备材料、调用方法、产物命名或故障处理时，完整阅读 [manual/使用手册.md](manual/使用手册.md)。

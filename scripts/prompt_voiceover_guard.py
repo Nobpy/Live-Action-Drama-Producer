@@ -11,28 +11,39 @@ from pathlib import Path
 
 HEADER = """【音频硬约束｜最高优先级】
 音频白名单：只允许角色现场开口对白、环境声、动作音效。
-音频黑名单：不得生成旁白声音、内心独白声音、画外解说、背景音乐；不得生成任何字幕或屏幕文字。
-文中所有“旁白占位”只控制画面、表演、停顿和时长，角色不朗读、不对口型，音轨保持无旁白。
+音频黑名单：不得生成旁白声音、内心独白声音、画外解说、TTS、低语式旁白、背景音乐；不得生成任何字幕或屏幕文字。
+文中所有“旁白画面锚点”只控制画面语义、动作、表演、停顿和时长，不是音频指令；任何角色或画外声音都不朗读、不对口型，原视频音轨必须绝对无旁白。
 """
 
 NARRATION_HEADING = re.compile(
-    r"^(?P<indent>\s*)(?:【\s*)?(?:旁白|内心独白|画外解说)(?:\s*[（(][^）)]*[）)])?(?:\s*】)?\s*[：:]",
+    r"^(?P<prefix>\s*(?:#{1,6}\s+|\*{1,2})?)(?P<role>\[[^\]]+\]\s*)?(?:【\s*)?(?:旁白|内心旁白|内心独白|画外解说)(?:画面锚点)?(?:\s*[（(][^）)]*[）)])?(?:\s*】)?\s*[：:]",
     re.IGNORECASE,
 )
 RISKY = [
     re.compile(r"(?:男声|女声)\s*画外音", re.IGNORECASE),
     re.compile(r"旁白\s*(?:朗读|念出|发声)", re.IGNORECASE),
+    re.compile(r"(?:使用|生成|加入|播放|出现).{0,12}(?:旁白声音|画外音|内心声音|解说声音|TTS)", re.IGNORECASE),
     re.compile(r"voice[- ]?over\s+narration", re.IGNORECASE),
+    re.compile(r"\bvoiceover\b", re.IGNORECASE),
     re.compile(r"spoken\s+narration", re.IGNORECASE),
+    re.compile(r"narrator(?:'s)?\s+voice", re.IGNORECASE),
+    re.compile(r"(?:generate|add|play|include)\s+(?:a\s+)?(?:narration|narrator|tts)", re.IGNORECASE),
 ]
-NEGATION = re.compile(r"不生成|不得|禁止|不要|无旁白|不朗读|not\s+(?:generate|spoken)", re.IGNORECASE)
+NEGATION = re.compile(
+    r"不生成|不得|禁止|不要|绝对无|无旁白|不朗读|不是音频|"
+    r"(?:do\s+not|don't|must\s+not|no)\s+(?:generate|add|play|include|spoken|voiceover|narration)",
+    re.IGNORECASE,
+)
 
 
 def adapt(text: str) -> str:
     out: list[str] = []
     for line in text.splitlines():
         line = NARRATION_HEADING.sub(
-            lambda m: f"{m.group('indent')}旁白占位（不生成声音，不朗读，不对口型）：",
+            lambda m: (
+                f"{m.group('prefix')}{m.group('role') or ''}"
+                "旁白画面锚点（仅控制画面，不生成声音，不朗读，不对口型）："
+            ),
             line,
             count=1,
         )

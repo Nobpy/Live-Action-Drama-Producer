@@ -6,7 +6,7 @@
 
 入口：<https://jzzm.duanju.com/homepage>；默认“九梦2.5 Pro”、9:16、480P、4–30 秒。
 
-1. 核对项目、目标集和新分镜编号。
+1. 核对项目、目标集和新分镜编号，并确认已取得 `SCRIPT_SPLIT_PREFLIGHT_PASS`：完整 30 秒镜覆盖 70～90 个原文单词且分配均衡，长集前镜均为 30 秒，最后一镜内容确实不足 30 秒时按实际 4～29 秒设计。
    - 先按 V4 确定剧情边界与镜头设计，再按 [cross-shot-continuity.md](cross-shot-continuity.md) 分别判断是否紧接、是否复杂站位，并记录 `continuity_control=NONE | FRAME | STAGING | BOTH`。
    - 若该镜与上一镜为 `continuity_link=HARD`，必须使用尾帧法；上一镜真实视频未完成、未选尾帧、连续性移交未完成时不得生成本镜。切到下一天、其他场景、其他时空或新段落时不使用上一镜尾帧控制。
    - 页面存在“首尾帧/首帧”能力时，把已验收 `FRAME` 放入首帧位置，随后重新读取控件与缩略图确认；普通素材栏不等于首帧设置。
@@ -16,7 +16,7 @@
 3. 填入经过 `prompt_voiceover_guard.py` 的平台版提示词。
 4. 在提示词语义对应处或绑定区逐个输入 `@`，从候选列表点选正确资产；普通文本 `@名称` 或普通资产栏都不算绑定。
 5. 资产引用数量没有上限；页面唯一 token 集合必须与 `required_asset_keys` 完全一致。一个角色多个 LOOK 时只选当前连续性的 LOOK。完整执行 [v4-asset-reference-preflight.md](v4-asset-reference-preflight.md)，真正缺失项按 [missing-asset-generation-loop.md](missing-asset-generation-loop.md) 补全并重新自检。
-6. 只有取得可验证的 `ASSET_PREFLIGHT_PASS` 后，才核对模型、比例、480P、时长、无字幕、无 BGM、旁白只作无声占位。
+6. 只有取得可验证的 `SCRIPT_SPLIT_PREFLIGHT_PASS` 和 `ASSET_PREFLIGHT_PASS` 后，才核对模型、比例、480P、时长、无字幕、无 BGM；旁白只作无声画面锚点，绝对不得生成旁白、内心声音、画外解说、TTS 或低语式旁白。
 7. 若用户要求人工检查，在生成按钮前暂停；否则只点击一次。
 8. 等待可播放状态，不重复点击。播放确认属于本镜后下载，保存为 `{集数}-{分镜号}.{抽卡序号}.MP4`，首次为 `.0`。
 9. 核对路径、扩展名、大小并运行 QC。

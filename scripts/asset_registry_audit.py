@@ -38,7 +38,7 @@ def main() -> int:
     with args.registry.open("r", encoding="utf-8-sig", newline="") as handle:
         reader = csv.DictReader(handle)
         if reader.fieldnames != FIELDS:
-            raise ValueError("registry header does not match the v1.5.1 template")
+            raise ValueError("registry header does not match the v1.6.0 template")
         rows = list(reader)
 
     seen_keys: set[str] = set()
