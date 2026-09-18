@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate V4 storyboard source-word budgets before prompt generation.
+"""Validate V4.2 storyboard source-word budgets before prompt generation.
 
 Input JSON:
 {
@@ -139,7 +139,7 @@ def validate(payload: dict[str, Any]) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Validate 70–90-word V4 storyboard budgets and final-shot duration rules."
+        description="Validate 70–90-word V4.2 storyboard budgets and final-shot duration rules."
     )
     parser.add_argument("input_json", type=Path, help="UTF-8 JSON file containing shots")
     parser.add_argument("--output-json", type=Path, help="optional path for the audit result")

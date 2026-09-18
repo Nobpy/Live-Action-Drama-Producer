@@ -1,6 +1,6 @@
 # 资产命名、识别与引用规范
 
-目标是让剧本实体、本地文件、注册表记录、剧梦资产和提示词 `@` token 永远一一对应。简单名称供人阅读，稳定键供机器判断。
+目标是让剧本实体、本地文件、注册表记录、剧梦资产和提示词富文本 token 永远一一对应。简单名称供人阅读，稳定键供机器判断。
 
 ## 三层名称
 
@@ -70,7 +70,7 @@ required_asset_keys:
 - SCENE-FAMILYHALL-DAY-V01
 ```
 
-人物与 LOOK 分列；每个实际出现的独立场景或时空至少一个场景资产；关键道具按实际出镜状态列。提示词末尾写语义绑定计划，但在剧梦页面必须逐项输入 `@` 并从列表点击，形成平台 token。引用数量没有上限。提交前按 [v4-asset-reference-preflight.md](v4-asset-reference-preflight.md) 比较页面唯一 token 与 `required_asset_keys`：不能缺失，也不能多出。提示词出现名字不等于人物实际可见，不为未出镜角色多绑资产。
+人物与 LOOK 分列；每个实际出现的独立场景或时空至少一个场景资产；关键道具按实际出镜状态列。语义绑定计划只保留在代理内部，不写进 V4.2 正文。剧梦页面必须使用 `一键引用`，把正文中已有的自然实体名称映射成平台富文本 token；正文末尾不得追加资产清单、`@名称` 或占位符。引用数量没有上限。提交前按 [v4-asset-reference-preflight.md](v4-asset-reference-preflight.md) 比较页面唯一 token 与 `required_asset_keys`：不能缺失，也不能多出。提示词出现名字不等于人物实际可见，不为未出镜角色多绑资产。
 
 `continuity_link=HARD` 时按 [cross-shot-continuity.md](cross-shot-continuity.md) 增加对应 `FRAME`，需要精确下一镜构图时再增加 `STAGING`。`FRAME` 和 `STAGING` 都是镜头级资产，连续性范围只覆盖对应连接，不得跨场景复用。`STAGING` 只锁站位与构图，绝不能替代基础 `SCENE`、人物 `CHAR/LOOK` 或关键 `PROP`。
 
