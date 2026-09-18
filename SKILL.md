@@ -2,11 +2,11 @@
 name: live-action-drama-producer
 description: "Orchestrate a live-action AI short-drama run from a local script and asset folder: split 30-second V4.2 shots into balanced 70–90-word source ranges, write example-style detailed director prompts, preserve their exact text in 剧梦, bind assets with 一键引用, use narration only as silent visual anchors, preserve continuity with actual tail frames and blocking composites, generate and QC videos, synthesize/timestamp/mix narration later, and recommend/download BGM without mixing it. Use for 全流程生成、剧梦生视频、V4.2均衡拆镜、旁白无声画面锚点、连续分镜防穿帮、尾帧续接、剪辑缓冲、站位合成图、缺失资产补全、资产引用自检、短剧旁白回填或短剧配乐任务."
 metadata:
-  version: 1.7.0
+  version: 1.7.1
   language: zh-CN
 ---
 
-# Live-Action-Drama-Producer v1.7.0
+# Live-Action-Drama-Producer v1.7.1
 
 把用户提供的剧本和资产目录转化为可交付的原始分镜视频、纯旁白音频、旁白版分镜视频与独立 BGM 候选。通过浏览器控制实际平台；V4.2 对英文等空格分词剧本按每个完整 30 秒 70～90 个原文单词均衡拆镜，最后一镜不足 30 秒时按实际容量设计；使用用户确认的示例式导演稿结构生成详细提示词，并把确认稿原文一次不差地放入剧梦；旁白可固定画面但绝不进入原视频音轨；缺失的必要视觉资产先按剧本和项目风格补全并验收；紧接镜头使用真实尾帧、复杂空间调度使用站位合成图，必要时两者并用；提示词必须通过拆镜、资产引用与连续性闭环自检后才能生成视频。
 
@@ -47,7 +47,7 @@ V4.2 不使用旧版固定字符配额，也不以重复通用禁令凑篇幅。
 
 完成正式稿后，把它保存为唯一批准源文件并运行 [scripts/v4_prompt_completeness_guard.py](scripts/v4_prompt_completeness_guard.py)。只有取得 `V4_2_TEMPLATE_PREFLIGHT_PASS` 才能进入剧梦录入。上传前后必须逐字符核对正文；平台自动规范化的单个文件末尾换行可以忽略，除此之外不得删除、摘要、改写、重排、追加或插入任何字符。不得添加 `V4_ADDON`、资产白名单、工作流说明、连续性操作说明、自检结果、状态码、token 占位符或完整资产文件名。
 
-剧梦资产绑定必须在正文逐字符录入并复核后进行：使用页面的 `一键引用`，把正文中已经存在的自然实体名称映射到已确认资产。不得为了引用而在正文末尾追加资产清单、占位符或 Skill 指令。映射名称必须是正文中的真实人物、场景或道具名称，并避免使用会误伤其他词语的过短子串。确认后，平台把匹配名称渲染为富文本 token 属于资产绑定显示，不视为改写导演内容；同一正确资产因多次自然出现而被一键引用多次是允许的。引用后不得再次整段粘贴或全量替换正文，否则 token 作废并必须从头重做一键引用。
+剧梦资产绑定必须在正文逐字符录入并复核后进行：使用页面的 `一键引用`，把正文中已经存在的自然实体名称映射到已确认资产。不得为了引用而在正文末尾追加资产清单、占位符或 Skill 指令。映射名称必须是正文中的真实人物、场景或道具名称，并避免使用会误伤其他词语的过短子串。严禁用 `_名称_`、`@名称`、标点变体、零宽字符、临时别名或占位词绕过平台限制。确认后，平台把匹配名称渲染为富文本 token 属于资产绑定显示，不视为改写导演内容；同一正确资产因多次自然出现而被一键引用多次是允许的。引用后不得再次整段粘贴或全量替换正文，否则 token 作废并必须从头重做一键引用。
 
 最终送入生成模型的内容只能是：**已确认的 V4.2 导演稿正文 + 剧梦一键引用形成的富文本资产 token**。其他 Skill 功能只指导代理如何拆镜、补资产、处理连续性、自检和操作平台，绝对不能被粘贴进视频生成提示词。
 
@@ -92,9 +92,9 @@ V4.2 不使用旧版固定字符配额，也不以重复通用禁令凑篇幅。
 
 仅在 `SCRIPT_SPLIT_PREFLIGHT_PASS` 后按唯一 V4.2 规范写示例式导演稿。运行完整度门禁并取得 `V4_2_TEMPLATE_PREFLIGHT_PASS`；再用 `prompt_voiceover_guard.py --check-only` 做只读旁白检查，不得生成“平台版”、不得通过适配器改写正文。检查剧情不漏、不重、不提前；位置、轴线、服装、道具连续；对白与旁白分类正确；旁白只作为无声画面锚点；所有实际可见资产均进入绑定表；没有多余资产。通过后把该正文保存为唯一批准源，之后不得改动任何字符。
 
-把批准的 V4.2 正文逐字符填入剧梦，再使用页面 `一键引用` 完成资产映射；不得在正文末尾追加资产清单、`@名称`、token 占位符、连续性说明、自检结果或任何 Skill 操作文字。随后完整阅读并执行 [references/v4-asset-reference-preflight.md](references/v4-asset-reference-preflight.md)。资产引用数量没有上限；不得为减少 token 数量而省略必要资产。普通文字资产名或素材栏图片都不算绑定，只有一键引用后形成的平台富文本 token 才算引用。
+先为批准正文建立自然名称到平台完整资产名的 JSON 映射，运行 [scripts/asset_reference_budget_guard.py](scripts/asset_reference_budget_guard.py)，取得 `ASSET_REFERENCE_BUDGET_PASS` 后，才把正文逐字符填入剧梦并使用页面 `一键引用`。不得在正文末尾追加资产清单、`@名称`、token 占位符、连续性说明、自检结果或任何 Skill 操作文字。若预算门禁失败或页面提示一键引用后超过 15000 字符，立即取消映射并恢复唯一批准源；绝不能用下划线包裹、符号变体、零宽字符、临时别名或假占位词规避。只能返回本地草稿阶段，在用户确认前用不歧义的代词/身份称谓减少重复自然名称，同时保持示例级机位细节，然后重新完成 V4.2、旁白、预算和用户确认流程。随后完整阅读并执行 [references/v4-asset-reference-preflight.md](references/v4-asset-reference-preflight.md)。资产引用数量没有上限；不得为减少 token 数量而省略必要资产。普通文字资产名或素材栏图片都不算绑定，只有一键引用后形成且载荷完整的平台富文本 token 才算引用。
 
-若自检发现确认缺失资产，转入 [references/missing-asset-generation-loop.md](references/missing-asset-generation-loop.md)；补全、上传和形成 token 后重新从头执行引用自检。只有页面唯一 token 集合与 `required_asset_keys` 完全一致，且错用、漏用、多用和未确认歧义均为零时，状态才是 `ASSET_PREFLIGHT_PASS`。若用户要求人工检查，在此状态后、生成按钮前暂停；否则继续。
+若自检发现确认缺失资产，转入 [references/missing-asset-generation-loop.md](references/missing-asset-generation-loop.md)；补全、上传和形成 token 后重新从头执行引用自检。只有页面唯一 token 集合与 `required_asset_keys` 完全一致，且每个 token 都能读取资产 ID 与名称/缩略图、具有非零可见尺寸，错用、漏用、多用、损坏引用和未确认歧义均为零时，状态才是 `ASSET_PREFLIGHT_PASS`。平台显示“成功完成 N 处一键引用”或页面存在 N 个 token 节点，均不能单独作为通过证据。若用户要求人工检查，在此状态后、生成按钮前暂停；否则继续。
 
 ### 4. 紧密连续分镜防穿帮
 
@@ -113,7 +113,7 @@ V4.2 先完成剧情拆镜和下一镜导演设计，再完整阅读并执行 [r
 
 ### 5. 剧梦生成原视频
 
-按 [references/platforms.md](references/platforms.md) 操作。没有可验证的 `SCRIPT_SPLIT_PREFLIGHT_PASS` 和 `ASSET_PREFLIGHT_PASS` 时绝对不能点击生成。通过后再次核对模型、比例、画质、时长及页面 token 集合，只点击一次生成，完成后播放验证并按固定规则下载。使用 `FRAME` 或 `BOTH` 时，总时长必须额外容纳 1–2 秒尾帧识别缓冲；不能通过挤压对白、旁白画面锚点或后续剧情来腾出该段。
+按 [references/platforms.md](references/platforms.md) 操作。没有可验证的 `SCRIPT_SPLIT_PREFLIGHT_PASS`、`V4_2_TEMPLATE_PREFLIGHT_PASS`、正文逐字符一致、`ASSET_REFERENCE_BUDGET_PASS` 和 `ASSET_PREFLIGHT_PASS` 时绝对不能点击生成。生成门禁证据必须同时包含：批准正文一致性、引用后字符预算通过、每个页面 token 的有效载荷通过；仅有成功提示、素材栏灰态或 token 数量绝不够。通过后再次核对模型、比例、画质、时长及页面 token 集合，只点击一次生成，完成后播放验证并按固定规则下载。使用 `FRAME` 或 `BOTH` 时，总时长必须额外容纳 1–2 秒尾帧识别缓冲；不能通过挤压对白、旁白画面锚点或后续剧情来腾出该段。
 
 `HARD` 连续性簇按“当前镜生成与 QC → 提取可用尾帧 → 准备下一镜 → 下一镜自检与生成”循环执行，禁止整簇同时排队抽卡。
 
