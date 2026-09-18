@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Live-Action-Drama-Producer 全流程</title>
+  <desc id="desc">从剧本和本地资产，经资产匹配、缺失补全、V4引用自检、剧梦生成、质量控制、旁白回填到独立BGM推荐的完整流程。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#13233f"/></linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6d5dfc"/><stop offset="1" stop-color="#22c7d6"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".28"/></filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#7183a8"/></marker>
+    <style>
+      .title{font:700 42px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#fff}.sub{font:400 18px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#aebbd3}.step{font:700 22px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#fff}.body{font:400 16px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#b9c5da}.num{font:700 18px Arial,sans-serif;fill:#fff}.tag{font:600 15px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#dfe8ff}.small{font:400 14px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#95a6c4}.line{stroke:#7183a8;stroke-width:3;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="1390" cy="80" r="260" fill="#6d5dfc" opacity=".08"/><circle cx="140" cy="810" r="270" fill="#22c7d6" opacity=".06"/>
+  <text x="80" y="82" class="title">Live-Action-Drama-Producer</text>
+  <text x="80" y="116" class="sub">从剧本到真人短剧分镜成片 · 缺失资产闭环 · 引用自检 · 旁白后置</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="165" width="1440" height="110" rx="24" fill="#132a48" stroke="#294a71"/>
+    <rect x="104" y="189" width="170" height="62" rx="16" fill="#203a60"/><text x="189" y="215" text-anchor="middle" class="tag">剧本</text><text x="189" y="238" text-anchor="middle" class="small">目标集与范围</text>
+    <rect x="294" y="189" width="210" height="62" rx="16" fill="#203a60"/><text x="399" y="215" text-anchor="middle" class="tag">本地资产</text><text x="399" y="238" text-anchor="middle" class="small">人物 · LOOK · 场景 · 道具</text>
+    <rect x="524" y="189" width="210" height="62" rx="16" fill="#203a60"/><text x="629" y="215" text-anchor="middle" class="tag">旁白参考音频</text><text x="629" y="238" text-anchor="middle" class="small">清晰 WAV</text>
+    <rect x="754" y="189" width="210" height="62" rx="16" fill="#203a60"/><text x="859" y="215" text-anchor="middle" class="tag">剧梦目标</text><text x="859" y="238" text-anchor="middle" class="small">项目 · 集数 · 镜号</text>
+    <rect x="984" y="189" width="210" height="62" rx="16" fill="#203a60"/><text x="1089" y="215" text-anchor="middle" class="tag">交付目录</text><text x="1089" y="238" text-anchor="middle" class="small">建议空文件夹</text>
+    <rect x="1214" y="189" width="282" height="62" rx="16" fill="url(#hero)"/><text x="1355" y="215" text-anchor="middle" class="tag">一次对话提交</text><text x="1355" y="238" text-anchor="middle" class="small" fill="#eefcff">Codex 自动执行</text>
+  </g>
+
+  <path class="line" d="M208 356H338"/><path class="line" d="M548 356H678"/><path class="line" d="M888 356H1018"/><path class="line" d="M1228 356H1358"/>
+  <path class="line" d="M1438 422V505H1306"/><path class="line" d="M1096 575H966"/><path class="line" d="M756 575H626"/><path class="line" d="M416 575H286"/>
+
+  <g filter="url(#shadow)">
+    <g><rect x="80" y="305" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="112" cy="337" r="18" fill="#6d5dfc"/><text x="112" y="343" text-anchor="middle" class="num">1</text><text x="140" y="344" class="step">读取与拆镜</text><text x="104" y="379" class="body">识别对白 / 旁白 / 动作</text><text x="104" y="404" class="small">按自然时长拆至 30 秒内</text></g>
+    <g><rect x="420" y="305" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="452" cy="337" r="18" fill="#6d5dfc"/><text x="452" y="343" text-anchor="middle" class="num">2</text><text x="480" y="344" class="step">资产匹配</text><text x="444" y="379" class="body">登记 · 指纹 · 视觉核验</text><text x="444" y="404" class="small">唯一高置信度自动继续</text></g>
+    <g><rect x="760" y="305" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="792" cy="337" r="18" fill="#f5a64a"/><text x="792" y="343" text-anchor="middle" class="num">?</text><text x="820" y="344" class="step">资产门禁</text><text x="784" y="379" class="body">歧义暂停 · 缺失补全</text><text x="784" y="404" class="small">生成、验收、登记再引用</text></g>
+    <g><rect x="1100" y="305" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="1132" cy="337" r="18" fill="#22c7d6"/><text x="1132" y="343" text-anchor="middle" class="num">3</text><text x="1160" y="344" class="step">V4 提示词</text><text x="1124" y="379" class="body">导演级分镜 + 旁白占位</text><text x="1124" y="404" class="small">防误读、无字幕、无 BGM</text></g>
+    <g><rect x="1390" y="305" width="130" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="1422" cy="337" r="18" fill="#22c7d6"/><text x="1422" y="343" text-anchor="middle" class="num">4</text><text x="1450" y="344" class="step">剧梦</text><text x="1414" y="379" class="body">@ 自检</text><text x="1414" y="404" class="small">PASS 后生成</text></g>
+
+    <g><rect x="1096" y="517" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="1128" cy="549" r="18" fill="#22c7d6"/><text x="1128" y="555" text-anchor="middle" class="num">5</text><text x="1156" y="556" class="step">原视频 QC</text><text x="1120" y="591" class="body">技术检测 + 视觉检查</text><text x="1120" y="616" class="small">问题时间码，不自行重抽</text></g>
+    <g><rect x="756" y="517" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="788" cy="549" r="18" fill="#6d5dfc"/><text x="788" y="555" text-anchor="middle" class="num">6</text><text x="816" y="556" class="step">旁白生成</text><text x="780" y="591" class="body">先测视频真实空档</text><text x="780" y="616" class="small">Speed 0.95–1.25</text></g>
+    <g><rect x="416" y="517" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="448" cy="549" r="18" fill="#6d5dfc"/><text x="448" y="555" text-anchor="middle" class="num">7</text><text x="476" y="556" class="step">旁白回填</text><text x="440" y="591" class="body">FFmpeg 固定 cue 混音</text><text x="440" y="616" class="small">复制画面流，输出 (OV)</text></g>
+    <g><rect x="76" y="517" width="210" height="118" rx="20" fill="#172945" stroke="#344d73"/><circle cx="108" cy="549" r="18" fill="#f5a64a"/><text x="108" y="555" text-anchor="middle" class="num">8</text><text x="136" y="556" class="step">BGM 推荐</text><text x="100" y="591" class="body">试听 · 对比 · 独立下载</text><text x="100" y="616" class="small">明确不混入视频</text></g>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="710" width="1440" height="116" rx="24" fill="#10263e" stroke="#2f5274"/>
+    <text x="108" y="749" class="step">交付</text>
+    <rect x="220" y="735" width="230" height="60" rx="15" fill="#193652"/><text x="335" y="761" text-anchor="middle" class="tag">原视频</text><text x="335" y="783" text-anchor="middle" class="small">1-1.0.MP4</text>
+    <rect x="472" y="735" width="230" height="60" rx="15" fill="#193652"/><text x="587" y="761" text-anchor="middle" class="tag">旁白音频</text><text x="587" y="783" text-anchor="middle" class="small">1.wav / 1-1.wav</text>
+    <rect x="724" y="735" width="230" height="60" rx="15" fill="#193652"/><text x="839" y="761" text-anchor="middle" class="tag">旁白版视频</text><text x="839" y="783" text-anchor="middle" class="small">1-1.0(OV).MP4</text>
+    <rect x="976" y="735" width="230" height="60" rx="15" fill="#193652"/><text x="1091" y="761" text-anchor="middle" class="tag">QC 与 Cue</text><text x="1091" y="783" text-anchor="middle" class="small">JSON 检查记录</text>
+    <rect x="1228" y="735" width="244" height="60" rx="15" fill="#193652"/><text x="1350" y="761" text-anchor="middle" class="tag">独立 BGM 候选</text><text x="1350" y="783" text-anchor="middle" class="small">用户后续自行试配</text>
+  </g>
+  <text x="80" y="866" class="small">核心原则：引用数量不限 · 错漏多用必须清零 · 缺失资产闭环补全 · 每镜只生成一次 · BGM 永不自动混入</text>
+</svg>

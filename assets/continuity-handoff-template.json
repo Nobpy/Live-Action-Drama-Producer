@@ -1,0 +1,76 @@
+{
+  "episode": "EP01",
+  "source_shot": "S01",
+  "target_shot": "S02",
+  "continuity_link": "HARD",
+  "continuity_control": "NONE | FRAME | STAGING | BOTH",
+  "source_video": "absolute/path/to/EP01-S01.0.MP4",
+  "selected_frame": {
+    "timestamp_seconds": 0.0,
+    "file": "absolute/path/to/FRAME-EP01-S01-END-V01.png",
+    "selection_reason": "stable final story state; blocking and props readable"
+  },
+  "camera": {
+    "side_of_axis": "",
+    "framing": "",
+    "lens_impression": "",
+    "height_and_angle": "",
+    "screen_direction": ""
+  },
+  "scene": {
+    "scene_asset_key": "",
+    "anchors": [],
+    "door_window_furniture_state": "",
+    "lighting_direction": ""
+  },
+  "characters": [
+    {
+      "name": "",
+      "char_asset_key": "",
+      "look_asset_key": "",
+      "screen_position": "",
+      "depth_plane": "",
+      "body_orientation": "",
+      "pose_and_weight": "",
+      "head_and_gaze": "",
+      "left_hand": "",
+      "right_hand": "",
+      "costume_hair_makeup_injury_state": "",
+      "motion_momentum": ""
+    }
+  ],
+  "props": [
+    {
+      "prop_asset_key": "",
+      "holder": "",
+      "hand": "",
+      "position_orientation_state": ""
+    }
+  ],
+  "target_first_action": "",
+  "edit_handle_buffer": {
+    "required_when": "continuity_control is FRAME or BOTH",
+    "planned_duration_seconds": "1.0-2.0",
+    "preserve": "same camera, framing, blocking, character/prop state, scene and lighting as selected FRAME",
+    "forbid": "new dialogue, new story beat, obvious camera move, reframing or repeated action",
+    "cut_to": "",
+    "actual_buffer_range": "",
+    "recommended_edit_cut_point": ""
+  },
+  "must_preserve": [],
+  "allowed_changes": [],
+  "forbidden_resets": [],
+  "staging": {
+    "asset_key": "",
+    "file": "",
+    "purpose": "lock target-shot opening composition, blocking, orientation, scale and occlusion"
+  },
+  "v4_alignment": {
+    "status": "DRAFT",
+    "frame_role": "",
+    "staging_role": "",
+    "camera_transition": "",
+    "conflicts": []
+  },
+  "status": "DRAFT"
+}

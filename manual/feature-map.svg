@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Live-Action-Drama-Producer 功能地图</title>
+  <desc id="desc">展示剧本导演、资产补全与引用审计、剧梦执行、旁白工程、质量控制、BGM推荐和交付管理七个功能模块。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#07111f"/><stop offset="1" stop-color="#17203b"/></linearGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7568ff"/><stop offset="1" stop-color="#18becf"/></linearGradient>
+    <filter id="s" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".3"/></filter>
+    <style>.t{font:700 40px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#fff}.st{font:400 18px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#aab9d0}.h{font:700 23px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#fff}.b{font:400 16px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#bac7db}.c{font:700 29px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#fff}.cs{font:500 17px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#ecfdff}.link{stroke:#415678;stroke-width:3;fill:none}.pill{font:600 14px 'Microsoft YaHei','PingFang SC',sans-serif;fill:#e5edff}</style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg2)"/>
+  <circle cx="800" cy="475" r="320" fill="none" stroke="#203452" stroke-width="1"/><circle cx="800" cy="475" r="245" fill="#132844" opacity=".35"/>
+  <text x="70" y="76" class="t">功能地图</text><text x="70" y="110" class="st">资产补全与真实 @ 引用自检作为生成视频前硬门禁</text>
+
+  <path class="link" d="M690 390L470 260"/><path class="link" d="M910 390L1130 260"/><path class="link" d="M650 475L360 475"/><path class="link" d="M950 475L1240 475"/><path class="link" d="M690 560L470 690"/><path class="link" d="M910 560L1130 690"/><path class="link" d="M800 625V770"/>
+
+  <g filter="url(#s)"><circle cx="800" cy="475" r="150" fill="url(#core)"/><text x="800" y="446" text-anchor="middle" class="c">Live-Action</text><text x="800" y="481" text-anchor="middle" class="c">Drama Producer</text><text x="800" y="518" text-anchor="middle" class="cs">真人短剧自动制片中枢</text><rect x="690" y="542" width="220" height="34" rx="17" fill="#fff" opacity=".16"/><text x="800" y="565" text-anchor="middle" class="pill">对话驱动 · 可中断 · 可审计</text></g>
+
+  <g filter="url(#s)"><rect x="190" y="160" width="340" height="170" rx="24" fill="#172d4a" stroke="#4d5fd1"/><circle cx="228" cy="200" r="20" fill="#7568ff"/><text x="265" y="208" class="h">剧本导演</text><text x="220" y="246" class="b">• 完整读取指定集数</text><text x="220" y="274" class="b">• 对白 / 旁白 / 动作分类</text><text x="220" y="302" class="b">• V4 分镜与 30 秒边界</text></g>
+  <g filter="url(#s)"><rect x="1070" y="160" width="340" height="170" rx="24" fill="#172d4a" stroke="#2c8e9b"/><circle cx="1108" cy="200" r="20" fill="#22c7d6"/><text x="1145" y="208" class="h">资产闭环</text><text x="1100" y="246" class="b">• 注册、指纹与缺失补全</text><text x="1100" y="274" class="b">• 视觉验收、上传、真实 @</text><text x="1100" y="302" class="b">• 错用 / 漏用 / 多用清零</text></g>
+  <g filter="url(#s)"><rect x="70" y="390" width="350" height="170" rx="24" fill="#172d4a" stroke="#2c8e9b"/><circle cx="108" cy="430" r="20" fill="#22c7d6"/><text x="145" y="438" class="h">剧梦执行</text><text x="100" y="476" class="b">• 九梦2.5 Pro · 9:16 · 480P</text><text x="100" y="504" class="b">• 提示词内真实 @ token</text><text x="100" y="532" class="b">• 每镜一次生成与规范下载</text></g>
+  <g filter="url(#s)"><rect x="1180" y="390" width="350" height="170" rx="24" fill="#172d4a" stroke="#d18b3c"/><circle cx="1218" cy="430" r="20" fill="#f5a64a"/><text x="1255" y="438" class="h">质量控制</text><text x="1210" y="476" class="b">• 解码 / 黑帧 / 冻结 / 音轨</text><text x="1210" y="504" class="b">• 身份、LOOK 与连续性</text><text x="1210" y="532" class="b">• 时间码报告，不自行重抽</text></g>
+  <g filter="url(#s)"><rect x="190" y="620" width="340" height="170" rx="24" fill="#172d4a" stroke="#4d5fd1"/><circle cx="228" cy="660" r="20" fill="#7568ff"/><text x="265" y="668" class="h">旁白工程</text><text x="220" y="706" class="b">• 先测真实无对白窗口</text><text x="220" y="734" class="b">• 0.95–1.25 安全速度</text><text x="220" y="762" class="b">• cue 对齐与 FFmpeg 回填</text></g>
+  <g filter="url(#s)"><rect x="1070" y="620" width="340" height="170" rx="24" fill="#172d4a" stroke="#d18b3c"/><circle cx="1108" cy="660" r="20" fill="#f5a64a"/><text x="1145" y="668" class="h">BGM 推荐</text><text x="1100" y="706" class="b">• 剧情与情绪匹配</text><text x="1100" y="734" class="b">• 主候选 + 对照试听</text><text x="1100" y="762" class="b">• 独立下载，绝不混入视频</text></g>
+  <g filter="url(#s)"><rect x="625" y="740" width="350" height="110" rx="24" fill="#172d4a" stroke="#58708f"/><circle cx="663" cy="780" r="20" fill="#7790ad"/><text x="700" y="788" class="h">交付管理</text><text x="655" y="823" class="b">规范命名 · WAV/Cue/QC · 绝对路径清单</text></g>
+
+  <rect x="1210" y="70" width="320" height="62" rx="18" fill="#122a43" stroke="#35516f"/><text x="1370" y="96" text-anchor="middle" class="pill">安全门禁</text><text x="1370" y="119" text-anchor="middle" class="st">引用自检 · 资产QC · 旁白超时</text>
+</svg>
