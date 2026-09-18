@@ -2,11 +2,11 @@
 name: live-action-drama-producer
 description: "Orchestrate a live-action AI short-drama run from a local script and asset folder: split 30-second V4 shots into balanced 70–90-word source ranges, use narration only as silent visual anchors, match or generate assets, preserve continuity with actual tail frames and blocking composites, audit exact 剧梦 asset bindings, generate and QC videos, synthesize/timestamp/mix narration later, and recommend/download BGM without mixing it. Use for 全流程生成、剧梦生视频、V4均衡拆镜、旁白无声画面锚点、连续分镜防穿帮、尾帧续接、剪辑缓冲、站位合成图、缺失资产补全、资产引用自检、短剧旁白回填或短剧配乐任务."
 metadata:
-  version: 1.6.0
+  version: 1.6.1
   language: zh-CN
 ---
 
-# Live-Action-Drama-Producer v1.6.0
+# Live-Action-Drama-Producer v1.6.1
 
 把用户提供的剧本和资产目录转化为可交付的原始分镜视频、纯旁白音频、旁白版分镜视频与独立 BGM 候选。通过浏览器控制实际平台；V4 对英文等空格分词剧本按每个完整 30 秒 70～90 个原文单词均衡拆镜，最后一镜不足 30 秒时按实际容量设计；旁白可固定画面但绝不进入原视频音轨；缺失的必要视觉资产先按剧本和项目风格补全并验收；紧接镜头使用真实尾帧、复杂空间调度使用站位合成图，必要时两者并用；提示词必须通过拆镜、资产引用与连续性闭环自检后才能生成视频。
 
@@ -38,6 +38,10 @@ metadata:
 ## 唯一分镜规范与防误读适配
 
 写提示词前完整阅读 [references/storyboard-director-v4.md](references/storyboard-director-v4.md)，仅以它作为分镜写作规范。不要调用或混入其他分镜 Skill，尤其禁止 `ai-drama-storyboard`。
+
+只要本 Skill 被调用，交给视频生成平台的正式提示词就必须是 V4 超详细完整执行稿。绝对禁止把正式提示词压缩、摘要、改写为“可执行精简版”“平台精简版”“短版”或仅保留栏目骨架；也不能因为平台操作耗时、上下文长度、资产较多、已经生成过一次、用户只查看结果或其他任何便利性原因删减执行信息。即使用户另要简短说明，也只能额外提供供人阅读的摘要，摘要不得覆盖、替换或上传为正式 V4 提示词。若用户明确只要短提示词，则该短稿不属于本 Skill 的 V4 正式生成流程，不能以本 Skill 名义提交或抽卡。
+
+V4 原稿完成后，必须先运行 [scripts/v4_prompt_completeness_guard.py](scripts/v4_prompt_completeness_guard.py)；只有取得 `V4_DETAIL_PREFLIGHT_PASS` 才能运行旁白防误读适配器并填入剧梦。20～30 秒正式剧情分镜不少于 8000 字符，8～15 秒不少于 4000 字符，3～7 秒不少于 2500 字符；16～19 秒按 4000～8000 字符线性计算最低值。字符数只是最低门槛，同时还必须包含脚本边界、资产职责、空间/站位、人物逐角表演、摄影机/轴线、逐秒时间轴、面部与眼神、道具/场景连续性、声音与对白、禁止项、最终结束点和下一镜衔接。缺少任何一层都必须继续扩写和复检，不得以字数达标代替内容完整。
 
 V4 提示词完成后，必须运行 [scripts/prompt_voiceover_guard.py](scripts/prompt_voiceover_guard.py) 生成平台版提示词，再将平台版填入剧梦。不得修改原始 V4 参考文件。适配器必须：
 
@@ -88,7 +92,7 @@ V4 提示词完成后，必须运行 [scripts/prompt_voiceover_guard.py](scripts
 
 ### 3. 生成平台提示词
 
-仅在 `SCRIPT_SPLIT_PREFLIGHT_PASS` 后按 V4 写完整提示词，再用防误读适配器生成平台版。检查剧情不漏、不重、不提前；位置、轴线、服装、道具连续；对白与旁白分类正确；旁白只作为无声画面锚点；所有实际可见资产均进入绑定表；没有多余资产。
+仅在 `SCRIPT_SPLIT_PREFLIGHT_PASS` 后按 V4 写超详细完整执行稿，取得 `V4_DETAIL_PREFLIGHT_PASS` 后再用防误读适配器生成平台版。平台版只能做旁白防误读转换和声音安全加固，不得删减、摘要、合并或压缩任何 V4 执行信息。检查剧情不漏、不重、不提前；位置、轴线、服装、道具连续；对白与旁白分类正确；旁白只作为无声画面锚点；所有实际可见资产均进入绑定表；没有多余资产。
 
 平台版填入剧梦并完成 `@` 绑定后，必须完整阅读并执行 [references/v4-asset-reference-preflight.md](references/v4-asset-reference-preflight.md)。资产引用数量没有上限；不得为减少 token 数量而省略必要资产。普通文字资产名、普通文字 `@名称` 或素材栏图片都不算绑定，只有从候选列表选中形成的平台 token 才算引用。
 
